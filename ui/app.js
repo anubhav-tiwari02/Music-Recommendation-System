@@ -1,3 +1,5 @@
+// Demo dataset used by the UI prototype.
+// This can be replaced with API responses from the model backend later.
 const mockRecommendations = {
   Blindman: [
     { artist: 'The Handsome Family', song: 'Weightless Again' },
@@ -17,10 +19,14 @@ const mockRecommendations = {
 
 const titles = Object.keys(mockRecommendations);
 
+// Normalize user input/title text so matching is more forgiving.
 function normalize(value) {
   return value.trim().toLowerCase().replace(/[^a-z0-9\s]/g, '').replace(/\s+/g, ' ');
 }
 
+// Resolve a query to the best available title.
+// 1) exact normalized match
+// 2) fallback similarity heuristic
 function getClosestTitle(query) {
   const cleanQuery = normalize(query);
   const exact = titles.find((title) => normalize(title) === cleanQuery);
@@ -51,6 +57,7 @@ function getClosestTitle(query) {
   return { matched: best, fuzzy: true };
 }
 
+// Render recommendation cards into the results container.
 function renderResults(items) {
   const results = document.getElementById('results');
   results.innerHTML = '';
@@ -63,6 +70,7 @@ function renderResults(items) {
   });
 }
 
+// Form submit handler: match input title and display recommendations.
 document.getElementById('searchForm').addEventListener('submit', (event) => {
   event.preventDefault();
   const query = document.getElementById('songInput').value;

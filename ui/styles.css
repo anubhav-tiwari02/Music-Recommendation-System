@@ -1,4 +1,5 @@
 :root {
+  /* Color system */
   --bg: #0f1226;
   --panel: #1a1f3a;
   --text: #f8f9ff;
@@ -14,6 +15,7 @@
 }
 
 body {
+  /* App shell */
   margin: 0;
   font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
   background: radial-gradient(circle at top right, #1c2350, var(--bg) 60%);
@@ -41,6 +43,7 @@ body {
 }
 
 .layout {
+  /* Mobile-first stacked layout */
   display: grid;
   gap: 1rem;
   grid-template-columns: 1fr;
@@ -144,6 +147,7 @@ button:hover {
 }
 
 @media (min-width: 760px) {
+  /* Tablet/Desktop layout */
   .layout {
     grid-template-columns: 1fr 1.4fr;
     align-items: start;
