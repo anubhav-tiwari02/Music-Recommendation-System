@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Music Recommendation System</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <!-- Header / project intro -->
+    <header class="topbar">
+      <div class="container">
+        <h1>🎵 Music Recommendation System</h1>
+        <p>Find similar songs from lyric-based recommendations.</p>
+      </div>
+    </header>
+
+    <main class="container layout">
+      <!-- Search controls -->
+      <section class="panel search-panel">
+        <h2>Search Song</h2>
+        <form id="searchForm" class="search-form">
+          <label for="songInput">Song title</label>
+          <div class="search-row">
+            <input
+              id="songInput"
+              type="text"
+              placeholder="Try: Blindman, blind man, Yellow..."
+              autocomplete="off"
+              required
+            />
+            <button type="submit">Get Recommendations</button>
+          </div>
+        </form>
+        <p id="status" class="status" aria-live="polite"></p>
+      </section>
+
+      <!-- Recommendation output -->
+      <section class="panel result-panel">
+        <div class="result-header">
+          <h2>Recommendations</h2>
+          <span id="matchInfo" class="badge"></span>
+        </div>
+        <div id="results" class="card-grid"></div>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

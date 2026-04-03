@@ -1,0 +1,163 @@
+:root {
+  /* Color system */
+  --bg: #0f1226;
+  --panel: #1a1f3a;
+  --text: #f8f9ff;
+  --muted: #b2b7d9;
+  --accent: #7a7fff;
+  --accent-2: #4cd5b5;
+  --danger: #ff7d7d;
+  --border: rgba(255, 255, 255, 0.12);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  /* App shell */
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: radial-gradient(circle at top right, #1c2350, var(--bg) 60%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.container {
+  width: min(1000px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+.topbar {
+  padding: 2rem 0 1rem;
+}
+
+.topbar h1 {
+  margin: 0;
+  font-size: clamp(1.3rem, 3.4vw, 2rem);
+}
+
+.topbar p {
+  color: var(--muted);
+  margin-top: 0.4rem;
+}
+
+.layout {
+  /* Mobile-first stacked layout */
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: 1fr;
+  padding-bottom: 2rem;
+}
+
+.panel {
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.07), rgba(255, 255, 255, 0.03));
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1rem;
+  backdrop-filter: blur(4px);
+}
+
+.search-form {
+  display: grid;
+  gap: 0.6rem;
+}
+
+label {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.search-row {
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: 1fr;
+}
+
+input {
+  width: 100%;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text);
+  padding: 0.75rem 0.8rem;
+}
+
+button {
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(130deg, var(--accent), var(--accent-2));
+  color: #0d1024;
+  padding: 0.75rem 1rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.08);
+}
+
+.status {
+  min-height: 1.2rem;
+  color: var(--muted);
+  margin: 0.8rem 0 0;
+}
+
+.status.error {
+  color: var(--danger);
+}
+
+.result-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.badge {
+  font-size: 0.8rem;
+  color: #0d1024;
+  background: #d9dcff;
+  border-radius: 999px;
+  padding: 0.25rem 0.6rem;
+  display: none;
+}
+
+.card-grid {
+  margin-top: 0.8rem;
+  display: grid;
+  gap: 0.65rem;
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0.85rem;
+  background: rgba(8, 10, 24, 0.5);
+}
+
+.card h3 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.card p {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}
+
+@media (min-width: 760px) {
+  /* Tablet/Desktop layout */
+  .layout {
+    grid-template-columns: 1fr 1.4fr;
+    align-items: start;
+  }
+
+  .search-row {
+    grid-template-columns: 1fr auto;
+  }
+
+  .card-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
