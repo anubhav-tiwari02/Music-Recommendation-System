@@ -111,6 +111,8 @@ document.getElementById('searchForm').addEventListener('submit', (event) => {
     }
 
     renderResults(result.recommendations || []);
+    const modeSuffix = result.retrieval_mode ? ` (${result.retrieval_mode} retrieval)` : '';
+    status.textContent = `Showing top recommendations for "${result.matched_song}"${modeSuffix}`;
     status.textContent = `Showing top recommendations for "${result.matched_song}"`;
   } catch (error) {
     document.getElementById('results').innerHTML = '';
