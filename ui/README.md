@@ -27,3 +27,8 @@ Then open `http://localhost:8000` in your browser.
   - `tfidf` mode when scikit-learn is available
   - `lite_tfidf` mode as a zero-dependency fallback.
 - You can swap backend ranking logic with notebook/model artifacts in a future step.
+- The backend currently uses an in-memory demo catalog and fuzzy title matching.
+- You can swap backend ranking logic with notebook/model artifacts in a future step.
+- This is a UI prototype with mock recommendation data.
+- It demonstrates exact + fuzzy title matching behavior and a mobile-first responsive layout.
+- You can wire this UI to the notebook/model output via an API in a future step.

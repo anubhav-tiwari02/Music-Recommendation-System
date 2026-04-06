@@ -4,6 +4,11 @@ Implements roadmap improvements:
 - exposes recommendation logic behind an HTTP API
 - allows the UI to request recommendations instead of using in-file mock state
 - upgrades ranking from simple tag-overlap to vector similarity retrieval
+"""Minimal recommendation API (standard-library only).
+
+Implements change #1 from roadmap:
+- exposes recommendation logic behind an HTTP API
+- allows the UI to request recommendations instead of using in-file mock state
 """
 
 from __future__ import annotations
@@ -60,6 +65,19 @@ CATALOG: List[Song] = [
 def _build_text(song: Song) -> str:
     tags_text = " ".join(song.tags)
     return f"{song.title} {song.artist} {song.lyrics_snippet} {tags_text}"
+
+
+    Song("The Handsome Family", "Blindman", ("folk", "dark", "story")),
+    Song("Nick Drake", "River Man", ("folk", "acoustic", "melancholy")),
+    Song("Tom Waits", "Hold On", ("blues", "gritty", "story")),
+    Song("Leonard Cohen", "Famous Blue Raincoat", ("poetic", "folk", "melancholy")),
+    Song("Bob Dylan", "Shelter from the Storm", ("folk", "story", "classic")),
+    Song("Coldplay", "Yellow", ("pop", "romantic", "melodic")),
+    Song("Coldplay", "Shiver", ("pop", "melodic", "alt")),
+    Song("Snow Patrol", "Chasing Cars", ("pop", "emotional", "anthem")),
+    Song("Keane", "Somewhere Only We Know", ("pop", "piano", "nostalgic")),
+    Song("The Fray", "How to Save a Life", ("pop", "piano", "emotional")),
+]
 
 
 def _normalize(text: str) -> str:
@@ -169,6 +187,14 @@ class Retriever:
 
 
 RETRIEVER = Retriever(CATALOG)
+def _similarity(seed: Song, candidate: Song) -> float:
+    if seed.title == candidate.title:
+        return -1.0
+
+    seed_tags = set(seed.tags)
+    cand_tags = set(candidate.tags)
+    overlap = len(seed_tags & cand_tags)
+    return overlap / max(len(seed_tags | cand_tags), 1)
 
 
 def recommend(song_name: str, top_n: int = 5) -> dict:
@@ -179,6 +205,12 @@ def recommend(song_name: str, top_n: int = 5) -> dict:
     seed_idx = CATALOG.index(matched_song)
     indices = RETRIEVER.similar_indices(seed_idx, max(1, top_n))
     picks = [{"artist": CATALOG[idx].artist, "song": CATALOG[idx].title} for idx in indices]
+    ranked = sorted(CATALOG, key=lambda song: _similarity(matched_song, song), reverse=True)
+    picks = [
+        {"artist": song.artist, "song": song.title}
+        for song in ranked[: max(1, top_n)]
+        if song.title != matched_song.title
+    ]
 
     return {
         "query": song_name,
